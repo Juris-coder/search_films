@@ -4,6 +4,7 @@ let currentFocus;
 const API_ENDPOINT = 'https://api.themoviedb.org/3/search/movie?api_key=';
 const API_KEY = '35c2658e0e706d145f4d4f7e995e368f';
 const IMAGE_PATH = 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2';
+const MOVIE_PATH = 'https://www.themoviedb.org/movie/';
 const NOT_FOUND_IMAGE_PATH = 'https://media.istockphoto.com/vectors/internet-error-page-not-found-in-vertical-orientation-for-mobile-a-vector-id1252582562?s=612x612';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         count++;
         const $listItemInputValue = document.createElement('input');
         $listItemInputValue.type = 'hidden';
-        $listItemInputValue.value = 'https://www.themoviedb.org/movie/' + resultFunc[i].id + '-' + resultFunc[i].title.replace(/[^a-zA-Z ]/g, '').replace(/ /g, '-').toLowerCase();
+        $listItemInputValue.value = `${MOVIE_PATH}${resultFunc[i].id}-${resultFunc[i].title.replace(/[^a-zA-Z ]/g, '').replace(/ /g, '-').toLowerCase()}`;
         $listItem.addEventListener('click', function () {
           $filmsListInput.value = this.textContent;
           document.location.href = this.getElementsByTagName('input')[0].value;
@@ -50,14 +51,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         if ($radioList.checked) {
           $listItem.classList.add('list-div-styling');
-          $listItem.innerHTML = resultFunc[i].title + ' (' + resultFunc[i].vote_average.toFixed(1) + ')';
+          $listItem.innerHTML = `${resultFunc[i].title} (${resultFunc[i].vote_average.toFixed(1)})`;
         } else if ($radioPosters.checked) {
           $listItem.classList.add('poster-div-styling');
           $filmList.classList.add('autocomplete-posters');
           if (i > 2) break;
           const $image = document.createElement('IMG');
           if (resultFunc[i].poster_path) {
-            $image.setAttribute('src', IMAGE_PATH + resultFunc[i].poster_path);
+            $image.setAttribute('src', `${IMAGE_PATH}${resultFunc[i].poster_path}`);
           } else {
             $image.setAttribute('src', NOT_FOUND_IMAGE_PATH);
           }
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
           $listItem.appendChild($image);
 
           const $filmTitle = document.createElement('H4');
-          $filmTitle.innerHTML = resultFunc[i].title + ' ';
+          $filmTitle.innerHTML = `${resultFunc[i].title} `;
           $listItem.appendChild($filmTitle);
 
           const $filmYear = document.createElement('P');
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function ajax() {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', API_ENDPOINT + API_KEY + '&query=' + $filmsListInput.value, true);
+    xhr.open('GET', `${API_ENDPOINT}${API_KEY}&query=${$filmsListInput.value}`, true);
     xhr.onload = function () {
       if (xhr.status === 200 && xhr.readyState === 4) {
         resultFunc = JSON.parse(xhr.responseText).results;
@@ -149,13 +150,13 @@ document.addEventListener('DOMContentLoaded', function () {
     $filmsAutocompleteList.style.display = 'none';
   });
 
-  // setTimeout(
-  //   function () {
-  //     $modal.style.display = 'block';
-  //     $overlay.style.display = 'block';
-  //     document.body.style.overflow = 'hidden';
-  //   }, 800,
-  // );
+  setTimeout(
+    function () {
+      $modal.style.display = 'block';
+      $overlay.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }, 800,
+  );
 });
 
 function hide() {

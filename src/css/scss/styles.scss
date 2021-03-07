@@ -37,6 +37,10 @@ body {
   color: $elmnt-color1;
 }
 
+.input-outer {
+  position: relative;
+}
+
 .autocomplete-items {
   text-align: left;
   overflow: auto;
@@ -123,12 +127,6 @@ body {
   max-width: fit-content;
 }
 
-.image-container {
-  text-align: center;
-  width: 100%;
-  margin-top: 100px;
-}
-
 .poster-style {
   width: 220px;
 }
@@ -202,6 +200,8 @@ body {
   filter: alpha(opacity=70);
 }
 
-.input-outer {
-  position: relative;
+.logo-container {
+  text-align: center;
+  width: 100%;
+  margin-top: 100px;
 }
